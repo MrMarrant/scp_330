@@ -1,0 +1,7 @@
+function scp_330.RemoveEffect(ply)
+    if (not IsValid(ply)) then return end
+
+    ply.SCP330_HandCut = nil 
+    ply.SCP330_CandyTaken = nil
+    scp_330.SetConvarClientSide("SCP330_FirstContact", false, ply)
+end

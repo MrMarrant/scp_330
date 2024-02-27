@@ -1,0 +1,1 @@
+SCP_330_CONFIG.RadiusEffect = CreateConVar( "SCP330_RadiusEffect", 150, {FCVAR_PROTECTED, FCVAR_ARCHIVE}, "Radius effect of the text message display at player to warning them", 0, 9999 )
