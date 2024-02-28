@@ -27,7 +27,7 @@ SWEP.DrawAmmo = false
 SWEP.AutoSwitch = false
 SWEP.Automatic = false
 
-SWEP.PrimaryCD = 2
+SWEP.PrimaryCD = 4
 SWEP.SecondaryCD = 2
 SWEP.CandyPossessed = {
 }
@@ -38,13 +38,14 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	-- TODO : (SFX + Effet du bonbon)
+	-- TODO : (Effet du bonbon)
 	local ply = self:GetOwner()
 	local candySelected = #self.CandyPossessed
 	
 	if (CLIENT) then ply:ChatPrint("Vous mangez le bonbon goût " .. self.CandyPossessed[candySelected] .. ".") end
 	self.CandyPossessed[candySelected] = nil
 	if ( #self.CandyPossessed == 0 and SERVER) then self:Remove() end
+	ply:EmitSound("scp_330/consume_candy.mp3")
 	self:SetNextPrimaryFire( CurTime() + self.PrimaryCD )
 end
 
