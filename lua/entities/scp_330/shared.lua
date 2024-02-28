@@ -21,9 +21,3 @@ ENT.Author = "MrMarrant"
 ENT.PrintName = "SCP-330"
 ENT.Spawnable = true
 ENT.Category = "SCP"
-
--- Set up every var related to the entity we will use
--- TODO : Voir de quoi on a besoin
-function ENT:SetupDataTables()
-    --self:NetworkVar("Bool", 0, "IsOpen")
-end

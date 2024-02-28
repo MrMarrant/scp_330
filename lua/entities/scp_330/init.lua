@@ -3,8 +3,7 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:Initialize()
-	self:SetModel( "" )
-	self:InitVar()
+	self:SetModel( "models/scp_330/scp_330.mdl" )
 	self:RebuildPhysics()
 end
 
@@ -40,18 +39,15 @@ function ENT:Use(ply)
 
 	if (ply.SCP330_CandyTaken >= 3) then
 		-- TODO : spawn les props de mains
+		-- TODO : SFX Cris de douleur
+		-- TODO : Effet de sang HUD
 		ply.SCP330_HandCut = true
 		scp_330.DeepBleeding(ply)
 		ply:StripWeapons()
-	elseif (ply:HasWeapon("candy_scp330")) then
-		local candy = ply:GetWeapon("candy_scp330")
-		table.insert( candy.CandyPossessed, SCP_330_CONFIG.FlavorCandy[math.random(1, #SCP_330_CONFIG.FlavorCandy)] )
 	else
-		local candy = ply:Give("candy_scp330")
-		table.insert( candy.CandyPossessed, SCP_330_CONFIG.FlavorCandy[math.random(1, #SCP_330_CONFIG.FlavorCandy)] )
+		local candySwep = ply:HasWeapon("candy_scp330") and ply:GetWeapon("candy_scp330") or ply:Give("candy_scp330")
+		local value, candyTaken = table.Random( SCP_330_CONFIG.FlavorCandy )
+		scp_330.SetTableEntitie(ply, candySwep, "CandyPossessed", candyTaken)
+		scp_330.SendNotification(ply, "Vous avez pris un bonbon de SCP-330 au parfum de " .. candyTaken .. " !")
 	end
-end
-
--- Intialise every var related to the entity
-function ENT:InitVar( )
 end

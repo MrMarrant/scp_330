@@ -27,6 +27,8 @@ SWEP.DrawAmmo = false
 SWEP.AutoSwitch = false
 SWEP.Automatic = false
 
+SWEP.PrimaryCD = 2
+SWEP.SecondaryCD = 2
 SWEP.CandyPossessed = {
 }
 
@@ -36,13 +38,25 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	-- TODO : Mange le bonbon (SFX + Effet du bonbon)
-	self.CandyPossessed[random(1, #self.CandyPossessed)] = nil 
-	if ( #self.CandyPossessed == 0 ) then self:Remove() end
+	-- TODO : (SFX + Effet du bonbon)
+	local ply = self:GetOwner()
+	local candySelected = #self.CandyPossessed
+	
+	if (CLIENT) then ply:ChatPrint("Vous mangez le bonbon goût " .. self.CandyPossessed[candySelected] .. ".") end
+	self.CandyPossessed[candySelected] = nil
+	if ( #self.CandyPossessed == 0 and SERVER) then self:Remove() end
+	self:SetNextPrimaryFire( CurTime() + self.PrimaryCD )
 end
 
 function SWEP:SecondaryAttack()
-	-- TODO : Description du parfum du bonbon
+	local ply = self:GetOwner()
+	if (CLIENT) then
+		ply:ChatPrint("Vous avez en votre possesion " .. #self.CandyPossessed .. " bonbons.")
+		for key, value in ipairs(self.CandyPossessed) do
+			ply:ChatPrint("Parfum : " .. value)
+		end
+	end
+	self:SetNextSecondaryFire( CurTime() + self.SecondaryCD )
 end
 
 function SWEP:OnDrop()

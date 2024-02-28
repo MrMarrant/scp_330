@@ -4,3 +4,5 @@ SCP_330_CONFIG.DurationBleeding = CreateConVar( "SCP330_DurationBleeding", 900, 
 SCP_330_CONFIG.BleedDamage = CreateConVar( "SCP330_BleedDamage", 5, {FCVAR_PROTECTED, FCVAR_ARCHIVE}, "Define the damage to apply when player bleed.", 1, 9999 )
 
 util.AddNetworkString(SCP_330_CONFIG.SetConvarClientSide)
+util.AddNetworkString(SCP_330_CONFIG.SendNotification)
+util.AddNetworkString(SCP_330_CONFIG.SetTableEntitie)

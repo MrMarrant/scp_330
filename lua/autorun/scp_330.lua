@@ -1,9 +1,9 @@
 -- Functions
 scp_330 = {}
 -- Global Variable
-scp_330_CONFIG = {}
+SCP_330_CONFIG = {}
 -- Root path
-scp_330_CONFIG.RootFolder = "scp_330/"
+SCP_330_CONFIG.RootFolder = "scp_330/"
 
 /*
 * Load the file set in the parameters.
@@ -50,6 +50,6 @@ local function LoadDirectory( directory )
 end
 
 print("SCP-330 Loading . . .")
-    LoadDirectory(scp_330_CONFIG.RootFolder .. "config")
-    LoadDirectory(scp_330_CONFIG.RootFolder .. "modules")
+    LoadDirectory(SCP_330_CONFIG.RootFolder .. "config")
+    LoadDirectory(SCP_330_CONFIG.RootFolder .. "modules")
 print("SCP-330 Loaded!")

@@ -32,3 +32,22 @@ function scp_330.DeepBleeding(ply)
         ply:TakeDamage(damageBleed)
     end)
 end
+
+function scp_330.SetTableEntitie(ply, ent, name, value)
+    timer.Simple(engine.TickInterval(), function()
+        if (not IsValid(ply)) then return end
+
+        table.insert( ent[name], value )
+        net.Start(SCP_330_CONFIG.SetTableEntitie)
+            net.WriteEntity(ent)
+            net.WriteString(name)
+            net.WriteString(value)
+        net.Send(ply)
+    end)
+end
+
+function scp_330.SendNotification(ply, message)
+    net.Start(SCP_330_CONFIG.SendNotification)
+        net.WriteString(message)
+    net.Send(ply)
+end
