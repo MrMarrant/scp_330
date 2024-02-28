@@ -1,0 +1,20 @@
+"VertexlitGeneric"
+{
+	$basetexture "scp_330_texture/T_scp330_yellow"
+	$normalmap "scp_330_texture/T_scp330_candy_normal"
+	$phong	"1"
+	$phongboost	"5"
+	$phongfresnelranges	"[.78 .9 1]"
+
+	$envmap	"env_cubemap"
+	$envmaptint	"[.25 .25 .25]" // modified by proxy (not in hlmv)
+	$normalmapalphaenvmapmask	"1"
+	$envmapfresnel	"1"
+
+	$rimlight	"1"
+	$rimmask	"1"
+	$rimlightboost	"1"
+	$rimlightexponent	"2"
+
+	$envmaptintmult	"[.25 .25 .25]"
+}

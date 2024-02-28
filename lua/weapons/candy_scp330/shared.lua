@@ -27,6 +27,9 @@ SWEP.DrawAmmo = false
 SWEP.AutoSwitch = false
 SWEP.Automatic = false
 
+SWEP.CandyPossessed = {
+}
+
 function SWEP:Initialize()
 	self:SetWeaponHoldType( self.HoldType )
 	self:SetHoldType( self.HoldType )
@@ -34,6 +37,8 @@ end
 
 function SWEP:PrimaryAttack()
 	-- TODO : Mange le bonbon (SFX + Effet du bonbon)
+	self.CandyPossessed[random(1, #self.CandyPossessed)] = nil 
+	if ( #self.CandyPossessed == 0 ) then self:Remove() end
 end
 
 function SWEP:SecondaryAttack()

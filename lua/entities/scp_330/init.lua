@@ -39,10 +39,16 @@ function ENT:Use(ply)
 	end
 
 	if (ply.SCP330_CandyTaken >= 3) then
-		-- TODO : spawn les props de mains et inflige des dégats au joueur constant  (5 dégâts toutes les 10 secondes) pendant 15 minutes
+		-- TODO : spawn les props de mains
 		ply.SCP330_HandCut = true
+		scp_330.DeepBleeding(ply)
+		ply:StripWeapons()
+	elseif (ply:HasWeapon("candy_scp330")) then
+		local candy = ply:GetWeapon("candy_scp330")
+		table.insert( candy.CandyPossessed, SCP_330_CONFIG.FlavorCandy[math.random(1, #SCP_330_CONFIG.FlavorCandy)] )
 	else
-		ply:Give("candy_scp330")
+		local candy = ply:Give("candy_scp330")
+		table.insert( candy.CandyPossessed, SCP_330_CONFIG.FlavorCandy[math.random(1, #SCP_330_CONFIG.FlavorCandy)] )
 	end
 end
 
