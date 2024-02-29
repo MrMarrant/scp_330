@@ -6,3 +6,9 @@ SCP_330_CONFIG.BleedDamage = CreateConVar( "SCP330_BleedDamage", 5, {FCVAR_PROTE
 util.AddNetworkString(SCP_330_CONFIG.SetConvarClientSide)
 util.AddNetworkString(SCP_330_CONFIG.SendNotification)
 util.AddNetworkString(SCP_330_CONFIG.SetTableEntitie)
+
+-- Send to all player that spawn, the value of the addon
+hook.Add( "PlayerInitialSpawn", "PlayerInitialSpawn.SCP330_SetConvarClientSide", function(ply)
+    print('caca')
+    scp_330.SetConvarClientSide("ClientRadiusEffect", SCP_330_CONFIG.RadiusEffect:GetInt(), ply)
+end)

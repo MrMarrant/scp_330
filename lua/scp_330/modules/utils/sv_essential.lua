@@ -30,6 +30,7 @@ function scp_330.DeepBleeding(ply)
         if (not IsValid(ply)) then return end
         
         ply:TakeDamage(damageBleed)
+        util.Decal( "Blood", ply:GetPos() - Vector(0, 0, 1), ply:GetPos() + Vector(0, 0, 1), ply )
     end)
 end
 

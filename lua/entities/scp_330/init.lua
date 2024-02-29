@@ -50,8 +50,8 @@ function ENT:Use(ply)
 		rightHand:Spawn()
 		scp_330.DeepBleeding(ply)
 		ply:StripWeapons()
-		-- TODO : Voir si on peut faire un decal de sang sur le sol
-		util.Decal( "Blood", ply:GetPos(), ply:GetPos()+ (40 * ply:GetRight()) )
+
+		util.Decal( "Blood", ply:GetPos() - Vector(0, 0, 1), ply:GetPos() + Vector(0, 0, 1), ply )
 	else
 		local candySwep = ply:HasWeapon("candy_scp330") and ply:GetWeapon("candy_scp330") or ply:Give("candy_scp330")
 		local value, candyTaken = table.Random( SCP_330_CONFIG.FlavorCandy )
