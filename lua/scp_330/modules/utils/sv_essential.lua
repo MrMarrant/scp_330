@@ -10,13 +10,30 @@ function scp_330.SetConvarClientSide(name, value, ply)
     end
 end
 
+function scp_330.SetVarClientSide(name, value, ply)
+    local typeValue = type( value )
+    if (typeValue == "boolean") then value = value and 1 or 0 end
+    net.Start(SCP_330_CONFIG.SetVarClientSide)
+        net.WriteString(name)
+        net.WriteString(typeValue)
+        net.WriteUInt(value, 14)
+    net.Send(ply)
+end
+
+function scp_330.RemoveClientEffect(ply)
+    net.Start(SCP_330_CONFIG.RemoveClientEffect)
+    net.Send(ply)
+end
+
+
 function scp_330.RemoveEffect(ply)
     if (not IsValid(ply)) then return end
 
     ply.SCP330_HandCut = nil 
     ply.SCP330_CandyTaken = nil
     timer.Remove("SCP055_DeepBleeding".. ply:EntIndex())
-    scp_330.SetConvarClientSide("SCP330_FirstContact", false, ply)
+    scp_330.RemoveClientEffect(ply)
+    
 end
 
 function scp_330.DeepBleeding(ply)
