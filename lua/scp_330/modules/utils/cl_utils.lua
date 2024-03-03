@@ -1,3 +1,18 @@
+local AddAlpha = 0.1
+local DrawAlpha = 0.2
+local Delay = 0.05
+local tab = {
+    [ "$pp_colour_addr" ] = 0,
+    [ "$pp_colour_addg" ] = 0,
+    [ "$pp_colour_addb" ] = 0,
+    [ "$pp_colour_brightness" ] = 0,
+    [ "$pp_colour_contrast" ] = 1,
+    [ "$pp_colour_colour" ] = 1,
+    [ "$pp_colour_mulr" ] = 0,
+    [ "$pp_colour_mulg" ] = 0,
+    [ "$pp_colour_mulb" ] = 0
+}
+
 net.Receive(SCP_330_CONFIG.SetConvarClientSide, function ()
     local name = net.ReadString()
     local value = net.ReadUInt(14)
@@ -43,35 +58,51 @@ function scp_330.ProximityEffect(ent)
     local maxRange = SCP_330_CONFIG.ClientRadiusEffect
     if (ply:GetPos():Distance(ent:GetPos()) > maxRange or not ply:Alive() or ply.SCP330_FirstContact or ply.SCP330IsDead) then return end
     ply.SCP330_FirstContact = true
-    -- TODO : Trouver un SFX
-    -- ply:EmitSound("")
+    ply:EmitSound("scp_330/on_first_contact.mp3")
+
     local CurentTime = CurTime()
     local alphaMax = 255
     local Alpha = 255
-    local maxTime = 5
+    local maxTime = 4   
     local incrementSize = 25
     local size = 5
-    local custom_vector = Vector( 1, 1, 1 )
+    local sizeVector = Vector( 1, 1, 1 )
+    local center = Vector(  SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.5 )
 
     hook.Add("HUDPaint", "HUDPaint.SCP_330_FirstContact".. ply:EntIndex(), function()
         if (not IsValid(ply)) then hook.Remove("HUDPaint", "HUDPaint.SCP_330_FirstContact".. ply:EntIndex()) return end
         local timePassed = CurTime() - CurentTime
         alpha = alphaMax - (alphaMax * (timePassed/maxTime))
-        local m = Matrix()
-        local center = Vector(  SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.5 )
         local colorWhite = Color(255,255,255, alpha)
+        tab[ "$pp_colour_contrast" ] = math.Clamp(timePassed / maxTime + 0.5, 0, 1)
 
-        m:Translate( center )
-        m:Scale( custom_vector * (size + (incrementSize * (timePassed/maxTime))) )
-        m:Translate( -center )
+        local matrixText = Matrix()
+        matrixText:Translate( center )
+        matrixText:Scale( sizeVector * (size + (incrementSize * (timePassed/maxTime))) )
+        matrixText:Translate( -center )
 
-        cam.PushModelMatrix( m )
+        cam.PushModelMatrix( matrixText )
             draw.DrawText( "n'en prenez pas plus qu'un,", "DermaDefault", SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.49, colorWhite, TEXT_ALIGN_CENTER )
             draw.DrawText( "s'il vous plait!!", "DermaDefault", SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.5, colorWhite, TEXT_ALIGN_CENTER )
         cam.PopModelMatrix()
-        --draw.DrawText( "n'en prenez pas plus qu'un, s'il vous plait!!", "DermaDefault", SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.5, Color(255, 255, 255, Alpha), TEXT_ALIGN_CENTER )
-        --
-        
+
+        DrawColorModify( tab )
+        cam.Start3D()
+            render.SetStencilEnable( true )
+            render.SetStencilWriteMask( 1 )
+            render.SetStencilTestMask( 1 )
+            render.SetStencilReferenceValue( 1 )
+            render.SetStencilFailOperation( STENCIL_KEEP )
+            render.SetStencilZFailOperation( STENCIL_KEEP )
+    
+            render.SetStencilCompareFunction( STENCIL_ALWAYS )
+            render.SetStencilPassOperation( STENCIL_REPLACE )
+    
+            render.SetStencilEnable( false )
+        cam.End3D()
+    
+        DrawMotionBlur( AddAlpha, DrawAlpha, Delay )
+
         if (timePassed >= 5) then hook.Remove("HUDPaint", "HUDPaint.SCP_330_FirstContact".. ply:EntIndex()) end
     end)
 end
