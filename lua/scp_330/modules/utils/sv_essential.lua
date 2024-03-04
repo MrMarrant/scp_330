@@ -42,13 +42,20 @@ function scp_330.DeepBleeding(ply)
     local recurrence = SCP_330_CONFIG.RecurrenceBleeding:GetInt()
     local duration = SCP_330_CONFIG.DurationBleeding:GetInt()
     local damageBleed = SCP_330_CONFIG.BleedDamage:GetInt()
+    scp_330.DisplayOverlayBlood(ply)
 
     timer.Create("SCP055_DeepBleeding".. ply:EntIndex(), recurrence, duration/recurrence, function()
         if (not IsValid(ply)) then return end
         
         ply:TakeDamage(damageBleed)
-        util.Decal( "Blood", ply:GetPos() - Vector(0, 0, 1), ply:GetPos() + Vector(0, 0, 1), ply )
+        scp_330.DisplayOverlayBlood(ply)
     end)
+end
+
+function scp_330.DisplayOverlayBlood(ply)
+    util.Decal( "Blood", ply:GetPos() - Vector(0, 0, 1), ply:GetPos() + Vector(0, 0, 1), ply )
+    net.Start(SCP_330_CONFIG.DisplayOverlayBlood)
+    net.Send(ply)
 end
 
 function scp_330.SetTableEntitie(ply, ent, name, value)

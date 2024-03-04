@@ -3,6 +3,7 @@ SCP_330_CONFIG.RemoveClientEffect = "SCP_330_CONFIG.RemoveClientEffect"
 SCP_330_CONFIG.SetVarClientSide = "SCP_330_CONFIG.SetVarClientSide"
 SCP_330_CONFIG.SendNotification = "SCP_330_CONFIG.SendNotification"
 SCP_330_CONFIG.SetTableEntitie = "SCP_330_CONFIG.SetTableEntitie"
+SCP_330_CONFIG.DisplayOverlayBlood = "SCP_330_CONFIG.DisplayOverlayBlood"
 
 SCP_330_CONFIG.FlavorCandy = {
     Fraise = true,
