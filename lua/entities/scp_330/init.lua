@@ -37,7 +37,6 @@ function ENT:Use(ply)
 	end
 
 	if (ply.SCP330_CandyTaken >= 3) then
-		-- TODO : Effet de sang HUD
 		ply.SCP330_HandCut = true
 		ply:EmitSound("scp_330/cut_hands.mp3")
 		local rightHand = ents.Create("prop_physics")
