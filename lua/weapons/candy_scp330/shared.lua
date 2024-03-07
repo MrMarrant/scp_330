@@ -7,7 +7,7 @@ SWEP.SlotPos = 1
 SWEP.Spawnable = true
 
 SWEP.Category = "SCP"
-SWEP.ViewModel = ""
+SWEP.ViewModel = Model( "models/weapons/scp_330/v_scp_330.mdl" )
 SWEP.WorldModel = "" -- TODO : Besoin d'un model pour le worldmodel ?
 
 SWEP.ViewModelFOV = 65
@@ -27,7 +27,7 @@ SWEP.DrawAmmo = false
 SWEP.AutoSwitch = false
 SWEP.Automatic = false
 
-SWEP.PrimaryCD = 4
+SWEP.PrimaryCD = 1
 SWEP.SecondaryCD = 2
 SWEP.CandyPossessed = {
 }
@@ -41,12 +41,19 @@ function SWEP:PrimaryAttack()
 	-- TODO : (Effet du bonbon)
 	local ply = self:GetOwner()
 	local candySelected = #self.CandyPossessed
+	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	
+	local VMAnim = ply:GetViewModel()
+	local NexIdle = VMAnim:SequenceDuration() / VMAnim:GetPlaybackRate() 
+
 	if (CLIENT) then ply:ChatPrint("Vous mangez le bonbon goût " .. self.CandyPossessed[candySelected] .. ".") end
+	self:SetNextPrimaryFire( CurTime() + NexIdle + self.PrimaryCD )
 	self.CandyPossessed[candySelected] = nil
-	if ( #self.CandyPossessed == 0 and SERVER) then self:Remove() end
+	timer.Simple(NexIdle, function()
+		if(!self:IsValid()) then return end
+		if ( #self.CandyPossessed == 0 and SERVER) then self:Remove() end
+	end)
 	ply:EmitSound("scp_330/consume_candy.mp3")
-	self:SetNextPrimaryFire( CurTime() + self.PrimaryCD )
 end
 
 function SWEP:SecondaryAttack()
@@ -62,4 +69,20 @@ end
 
 function SWEP:OnDrop()
 	self:Remove()
+end
+
+function SWEP:Deploy()
+	local ply = self:GetOwner()
+	local speedAnimation = GetConVarNumber( "sv_defaultdeployspeed" )
+	self:SendWeaponAnim( ACT_VM_DRAW )
+	self:SetPlaybackRate( speedAnimation )
+	local VMAnim = ply:GetViewModel()
+	local NexIdle = VMAnim:SequenceDuration() / VMAnim:GetPlaybackRate() 
+	self:SetNextPrimaryFire( CurTime() + NexIdle + 0.1 ) --? We add 0.1s for avoid to cancel primary animation
+	self:SetNextSecondaryFire( CurTime() + NexIdle )
+	timer.Simple(NexIdle, function()
+		if(!self:IsValid()) then return end
+		self:SendWeaponAnim( ACT_VM_IDLE )
+	end)
+	return true
 end
