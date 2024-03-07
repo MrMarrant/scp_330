@@ -8,10 +8,10 @@ SWEP.Spawnable = true
 
 SWEP.Category = "SCP"
 SWEP.ViewModel = Model( "models/weapons/scp_330/v_scp_330.mdl" )
-SWEP.WorldModel = "" -- TODO : Besoin d'un model pour le worldmodel ?
+SWEP.WorldModel = Model( "models/weapons/scp_330/w_scp_330.mdl" )
 
 SWEP.ViewModelFOV = 65
-SWEP.HoldType = "normal"
+SWEP.HoldType = "slam"
 SWEP.UseHands = true
 
 SWEP.Primary.ClipSize = -1
@@ -51,7 +51,11 @@ function SWEP:PrimaryAttack()
 	self.CandyPossessed[candySelected] = nil
 	timer.Simple(NexIdle, function()
 		if(!self:IsValid()) then return end
-		if ( #self.CandyPossessed == 0 and SERVER) then self:Remove() end
+		if ( #self.CandyPossessed == 0 and SERVER) then 
+			self:Remove() 
+		else
+			self:PlayDeployAnimation()
+		end
 	end)
 	ply:EmitSound("scp_330/consume_candy.mp3")
 end
@@ -72,6 +76,11 @@ function SWEP:OnDrop()
 end
 
 function SWEP:Deploy()
+	self:PlayDeployAnimation()
+	return true
+end
+
+function SWEP:PlayDeployAnimation()
 	local ply = self:GetOwner()
 	local speedAnimation = GetConVarNumber( "sv_defaultdeployspeed" )
 	self:SendWeaponAnim( ACT_VM_DRAW )
@@ -84,5 +93,4 @@ function SWEP:Deploy()
 		if(!self:IsValid()) then return end
 		self:SendWeaponAnim( ACT_VM_IDLE )
 	end)
-	return true
 end

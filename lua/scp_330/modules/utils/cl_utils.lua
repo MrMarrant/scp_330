@@ -99,8 +99,8 @@ function scp_330.ProximityEffect(ent)
     local alphaMax = 255
     local Alpha = 255
     local maxTime = 4
-    local incrementSize = 5
-    local size = 1
+    local incrementSize = 4
+    local size = 0.3
     local sizeVector = Vector( 1, 1, 1 )
     local center = Vector(  SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.5 )
 
