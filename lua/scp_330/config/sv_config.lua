@@ -9,6 +9,7 @@ util.AddNetworkString(SCP_330_CONFIG.SendNotification)
 util.AddNetworkString(SCP_330_CONFIG.SetTableEntitie)
 util.AddNetworkString(SCP_330_CONFIG.RemoveClientEffect)
 util.AddNetworkString(SCP_330_CONFIG.DisplayOverlayBlood)
+util.AddNetworkString(SCP_330_CONFIG.OnCutHand)
 
 -- Send to all player that spawn, the value of the addon
 hook.Add( "PlayerInitialSpawn", "PlayerInitialSpawn.SCP330_SetConvarClientSide", function(ply)
