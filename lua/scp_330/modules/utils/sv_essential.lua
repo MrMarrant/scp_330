@@ -42,12 +42,14 @@ function scp_330.DeepBleeding(ply)
     local recurrence = SCP_330_CONFIG.RecurrenceBleeding:GetInt()
     local duration = SCP_330_CONFIG.DurationBleeding:GetInt()
     local damageBleed = SCP_330_CONFIG.BleedDamage:GetInt()
+    scp_330.BlurrEffect(ply, 7)
     scp_330.DisplayOverlayBlood(ply)
 
     timer.Create("SCP055_DeepBleeding".. ply:EntIndex(), recurrence, duration/recurrence, function()
         if (not IsValid(ply)) then return end
-        
+
         ply:TakeDamage(damageBleed)
+        scp_330.BlurrEffect(ply, 3)
         scp_330.DisplayOverlayBlood(ply)
     end)
 end
@@ -74,5 +76,11 @@ end
 function scp_330.SendNotification(ply, message)
     net.Start(SCP_330_CONFIG.SendNotification)
         net.WriteString(message)
+    net.Send(ply)
+end
+
+function scp_330.BlurrEffect(ply, maxTime)
+    net.Start(SCP_330_CONFIG.BlurrEffect)
+        net.WriteUInt(maxTime, 14)
     net.Send(ply)
 end

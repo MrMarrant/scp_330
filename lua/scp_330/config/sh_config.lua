@@ -4,7 +4,8 @@ SCP_330_CONFIG.SetVarClientSide = "SCP_330_CONFIG.SetVarClientSide"
 SCP_330_CONFIG.SendNotification = "SCP_330_CONFIG.SendNotification"
 SCP_330_CONFIG.SetTableEntitie = "SCP_330_CONFIG.SetTableEntitie"
 SCP_330_CONFIG.DisplayOverlayBlood = "SCP_330_CONFIG.DisplayOverlayBlood"
-SCP_330_CONFIG.OnCutHand = "SCP_330_CONFIG.OnCutHand"
+SCP_330_CONFIG.PlayClientSound = "SCP_330_CONFIG.PlayClientSound"
+SCP_330_CONFIG.BlurrEffect = "SCP_330_CONFIG.BlurrEffect"
 
 SCP_330_CONFIG.FlavorCandy = {
     Fraise = true,

@@ -21,11 +21,17 @@ net.Receive(SCP_330_CONFIG.SetConvarClientSide, function ()
     SCP_330_CONFIG[name] = value
 end)
 
-net.Receive(SCP_330_CONFIG.OnCutHand, function ()
+net.Receive(SCP_330_CONFIG.PlayClientSound, function ()
     local ply = LocalPlayer()
     local sound = net.ReadString()
     scp_330.PlayClientSound(ply, sound)
-    scp_330.BlurrEffect(ply)
+end)
+
+net.Receive(SCP_330_CONFIG.BlurrEffect, function ()
+    local value = net.ReadUInt(14)
+    local ply = LocalPlayer()
+
+    scp_330.BlurrEffect(ply, value)
 end)
 
 net.Receive(SCP_330_CONFIG.SetVarClientSide, function ()
@@ -152,11 +158,10 @@ function scp_330.ProximityEffect(ent)
     end)
 end
 
-function scp_330.BlurrEffect(ply)
+function scp_330.BlurrEffect(ply, maxTime)
     if (not IsValid(ply)) then return end
 
     local CurentTime = CurTime()
-    local maxTime = 10
 
     hook.Add("HUDPaint", "HUDPaint.SCP_330_BlurrEffect".. ply:EntIndex(), function()
         if (not IsValid(ply)) then return end
