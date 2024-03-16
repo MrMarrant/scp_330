@@ -84,3 +84,14 @@ function scp_330.BlurrEffect(ply, maxTime)
         net.WriteUInt(maxTime, 14)
     net.Send(ply)
 end
+
+--NET MESSAGES
+net.Receive(SCP_330_CONFIG.SetConvarInt, function ( len, ply )
+    if (ply:IsSuperAdmin() or game.SinglePlayer()) then
+        local name = net.ReadString()
+        local value = net.ReadUInt(14)
+        SCP_330_CONFIG[name]:SetInt(value)
+
+        scp_330.SetConvarClientSide('Client'..name, value) --? The value clientside start with Client
+    end
+end)

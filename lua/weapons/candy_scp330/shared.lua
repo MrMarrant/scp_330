@@ -38,7 +38,6 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	-- TODO : (Effet du bonbon)
 	local ply = self:GetOwner()
 	local candySelected = #self.CandyPossessed
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
