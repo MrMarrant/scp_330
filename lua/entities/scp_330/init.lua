@@ -54,6 +54,11 @@ function ENT:Use(ply)
 		ply:StripWeapons()
 
 		util.Decal( "Blood", ply:GetPos() - Vector(0, 0, 1), ply:GetPos() + Vector(0, 0, 1), ply )
+
+		timer.Simple( 300, function()
+			if (IsValid(leftHand)) then leftHand:Remove() end
+			if (IsValid(rightHand)) then rightHand:Remove() end
+		end)
 	else
 		local candySwep = ply:HasWeapon("candy_scp330") and ply:GetWeapon("candy_scp330") or ply:Give("candy_scp330")
 		local value, candyTaken = table.Random( SCP_330_CONFIG.FlavorCandy )
