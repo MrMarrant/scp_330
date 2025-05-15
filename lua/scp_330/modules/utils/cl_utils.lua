@@ -24,28 +24,28 @@ function scp_330.ProximityEffect(ent)
 
     local CurentTime = CurTime()
     local alphaMax = 255
-    local Alpha = 255
+    local alpha = 255
     local maxTime = 4
     local incrementSize = 4
     local size = 0.3
     local sizeVector = Vector( 1, 1, 1 )
     local center = Vector(  SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.5 )
 
-    hook.Add("HUDPaint", "HUDPaint.SCP_330_FirstContact".. ply:EntIndex(), function()
+    hook.Add("HUDPaint", "HUDPaint.SCP_330_FirstContact" .. ply:EntIndex(), function()
         if (not IsValid(ply)) then return end
         local timePassed = CurTime() - CurentTime
-        alpha = alphaMax - (alphaMax * (timePassed/maxTime))
+        alpha = alphaMax - (alphaMax * (timePassed / maxTime))
         local colorWhite = Color(255,255,255, alpha)
         tab[ "$pp_colour_contrast" ] = math.Clamp(timePassed / maxTime + 0.3, 0, 1)
 
         local matrixText = Matrix()
         matrixText:Translate( center )
-        matrixText:Scale( sizeVector * (size + (incrementSize * (timePassed/maxTime))) )
+        matrixText:Scale( sizeVector * (size + (incrementSize * (timePassed / maxTime))) )
         matrixText:Translate( -center )
 
         cam.PushModelMatrix( matrixText )
-            draw.DrawText( "n'en prenez pas plus qu'un,", "SCP_330_FCFont", SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.41, colorWhite, TEXT_ALIGN_CENTER )
-            draw.DrawText( "s'il vous plait!!", "SCP_330_FCFont", SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.49, colorWhite, TEXT_ALIGN_CENTER )
+            draw.DrawText( scp_330.GetTranslation("proximity_effect_01"), "SCP_330_FCFont", SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.41, colorWhite, TEXT_ALIGN_CENTER )
+            draw.DrawText( scp_330.GetTranslation("proximity_effect_02"), "SCP_330_FCFont", SCP_330_CONFIG.ScrW * 0.5, SCP_330_CONFIG.ScrH * 0.49, colorWhite, TEXT_ALIGN_CENTER )
         cam.PopModelMatrix()
 
         DrawColorModify( tab )
@@ -56,16 +56,13 @@ function scp_330.ProximityEffect(ent)
             render.SetStencilReferenceValue( 1 )
             render.SetStencilFailOperation( STENCIL_KEEP )
             render.SetStencilZFailOperation( STENCIL_KEEP )
-    
             render.SetStencilCompareFunction( STENCIL_ALWAYS )
             render.SetStencilPassOperation( STENCIL_REPLACE )
-    
             render.SetStencilEnable( false )
         cam.End3D()
-    
         DrawMotionBlur( AddAlpha, DrawAlphaFC, DelayFC )
 
-        if (timePassed >= maxTime) then hook.Remove("HUDPaint", "HUDPaint.SCP_330_FirstContact".. ply:EntIndex()) end
+        if (timePassed >= maxTime) then hook.Remove("HUDPaint", "HUDPaint.SCP_330_FirstContact" .. ply:EntIndex()) end
     end)
 end
 
@@ -74,7 +71,7 @@ function scp_330.BlurrEffect(ply, maxTime)
 
     local CurentTime = CurTime()
 
-    hook.Add("HUDPaint", "HUDPaint.SCP_330_BlurrEffect".. ply:EntIndex(), function()
+    hook.Add("HUDPaint", "HUDPaint.SCP_330_BlurrEffect" .. ply:EntIndex(), function()
         if (not IsValid(ply)) then return end
         local timePassed = CurTime() - CurentTime
 
@@ -86,16 +83,13 @@ function scp_330.BlurrEffect(ply, maxTime)
             render.SetStencilReferenceValue( 1 )
             render.SetStencilFailOperation( STENCIL_KEEP )
             render.SetStencilZFailOperation( STENCIL_KEEP )
-    
             render.SetStencilCompareFunction( STENCIL_ALWAYS )
             render.SetStencilPassOperation( STENCIL_REPLACE )
-    
             render.SetStencilEnable( false )
         cam.End3D()
-    
         DrawMotionBlur( AddAlpha, DrawAlphaOC, DelayOC )
 
-        if (timePassed >= maxTime) then hook.Remove("HUDPaint", "HUDPaint.SCP_330_BlurrEffect".. ply:EntIndex()) end
+        if (timePassed >= maxTime) then hook.Remove("HUDPaint", "HUDPaint.SCP_330_BlurrEffect" .. ply:EntIndex()) end
     end)
 end
 
@@ -109,7 +103,7 @@ function scp_330.DisplayOverlay(ply)
     overlayBlood:SetImage("scp_330_assets/overlay_blood.png")
     ply.SCP330_OverlayBlood = overlayBlood
 
-    scp_330.PlayClientSound(ply, "scp_330/heavy_breath_".. math.random(1, 3) ..".mp3")
+    scp_330.PlayClientSound(ply, "scp_330/heavy_breath_" .. math.random(1, 3) .. ".mp3")
 end
 
 function scp_330.PlayClientSound(ply, sound)
@@ -153,17 +147,17 @@ net.Receive(SCP_330_CONFIG.SetVarClientSide, function ()
     local value = net.ReadUInt(14)
     local ply = LocalPlayer()
 
-    if(typeVar == "boolean") then value = tobool(value) end
+    if (typeVar == "boolean") then value = tobool(value) end
     ply[name] = value
 end)
 
 net.Receive(SCP_330_CONFIG.RemoveClientEffect, function ()
     local ply = LocalPlayer()
-    ply.SCP330_FirstContact = false 
-    hook.Remove("HUDPaint", "HUDPaint.SCP_330_FirstContact".. ply:EntIndex())
-    hook.Remove("Think", "Think.DisplayOverlayBlood_SCP330_".. ply:EntIndex())
-    hook.Remove("HUDPaint", "HUDPaint.SCP_330_BlurrEffect".. ply:EntIndex())
-    if (ply.SCP330_OverlayBlood) then 
+    ply.SCP330_FirstContact = false
+    hook.Remove("HUDPaint", "HUDPaint.SCP_330_FirstContact" .. ply:EntIndex())
+    hook.Remove("Think", "Think.DisplayOverlayBlood_SCP330_" .. ply:EntIndex())
+    hook.Remove("HUDPaint", "HUDPaint.SCP_330_BlurrEffect" .. ply:EntIndex())
+    if (ply.SCP330_OverlayBlood) then
         ply.SCP330_OverlayBlood:Remove()
         ply.SCP330_OverlayBlood = nil
     end
@@ -181,23 +175,22 @@ net.Receive(SCP_330_CONFIG.DisplayOverlayBlood, function ()
     local totalTime = 0
     local maxTime = 4
     local partTime = maxTime / 2
-    local delta = 1
     local alpha = 0
     local alphaMax = 200
 
-    hook.Add("Think", "Think.DisplayOverlayBlood_SCP330_".. ply:EntIndex(), function()
+    hook.Add("Think", "Think.DisplayOverlayBlood_SCP330_" .. ply:EntIndex(), function()
         if (not IsValid(ply)) then return end
         local timePassed = CurTime() - CurentTime
-        if timePassed >= partTime then 
+        if timePassed >= partTime then
             totalTime = totalTime + timePassed
             CurentTime = CurTime()
             timePassed = 0
             alpha = alphaMax
         end
-        alpha = totalTime < partTime and alphaMax * (timePassed/partTime) or alphaMax - (alphaMax * (timePassed/partTime))
+        alpha = totalTime < partTime and alphaMax * (timePassed / partTime) or alphaMax - (alphaMax * (timePassed / partTime))
         ply.SCP330_OverlayBlood:SetImageColor(Color(255, 255, 255, alpha))
         if (totalTime >= maxTime) then
-            hook.Remove("Think", "Think.DisplayOverlayBlood_SCP330_".. ply:EntIndex())
+            hook.Remove( "Think", "Think.DisplayOverlayBlood_SCP330_" .. ply:EntIndex() )
             ply.SCP330_OverlayBlood:Remove()
             ply.SCP330_OverlayBlood = nil
         end
@@ -264,14 +257,14 @@ hook.Add("PopulateToolMenu", "PopulateToolMenu.SCP330_MenuConfig", function()
         end
 
         panel:Clear()
-        panel:ControlHelp("Only Super Admins can change these values, all other roles will do nothing.")
-        panel:Help( "Radius effect of the text message display at player to warning them." )
+        panel:ControlHelp(scp_330.GetTranslation("warningsettings"))
+        panel:Help( scp_330.GetTranslation("radius_effect") )
         panel:AddItem(SCP330_RadiusEffect)
-        panel:Help( "Defined every x seconds, bleeding damage is applied." )
+        panel:Help( scp_330.GetTranslation("bleed_delay") )
         panel:AddItem(SCP330_RecurrenceBleeding)
-        panel:Help( "Define how long the bleeding will last in seconds." )
+        panel:Help( scp_330.GetTranslation("bleed_duration") )
         panel:AddItem(SCP330_DurationBleeding)
-        panel:Help( "Define the damage to apply when player bleed." )
+        panel:Help( scp_330.GetTranslation("bleed_damage") )
         panel:AddItem(SCP330_BleedDamage)
     end)
 end)

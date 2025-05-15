@@ -41,17 +41,17 @@ function SWEP:PrimaryAttack()
 	local ply = self:GetOwner()
 	local candySelected = #self.CandyPossessed
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-	
-	local VMAnim = ply:GetViewModel()
-	local NexIdle = VMAnim:SequenceDuration() / VMAnim:GetPlaybackRate() 
 
-	if (CLIENT) then ply:ChatPrint("Vous mangez le bonbon goût " .. self.CandyPossessed[candySelected] .. ".") end
+	local VMAnim = ply:GetViewModel()
+	local NexIdle = VMAnim:SequenceDuration() / VMAnim:GetPlaybackRate()
+
+	if (CLIENT) then ply:ChatPrint(scp_330.GetTranslation("eat_candy") .. self.CandyPossessed[candySelected] .. ".") end
 	self:SetNextPrimaryFire( CurTime() + NexIdle + self.PrimaryCD )
 	self.CandyPossessed[candySelected] = nil
 	timer.Simple(NexIdle, function()
-		if(!self:IsValid()) then return end
-		if ( #self.CandyPossessed == 0 and SERVER) then 
-			self:Remove() 
+		if ( !self:IsValid() ) then return end
+		if ( #self.CandyPossessed == 0 and SERVER ) then
+			self:Remove()
 		else
 			self:PlayDeployAnimation()
 		end
@@ -85,11 +85,11 @@ function SWEP:PlayDeployAnimation()
 	self:SendWeaponAnim( ACT_VM_DRAW )
 	self:SetPlaybackRate( speedAnimation )
 	local VMAnim = ply:GetViewModel()
-	local NexIdle = VMAnim:SequenceDuration() / VMAnim:GetPlaybackRate() 
+	local NexIdle = VMAnim:SequenceDuration() / VMAnim:GetPlaybackRate()
 	self:SetNextPrimaryFire( CurTime() + NexIdle + 0.1 ) --? We add 0.1s for avoid to cancel primary animation
 	self:SetNextSecondaryFire( CurTime() + NexIdle )
 	timer.Simple(NexIdle, function()
-		if(!self:IsValid()) then return end
+		if ( !self:IsValid() ) then return end
 		self:SendWeaponAnim( ACT_VM_IDLE )
 	end)
 end

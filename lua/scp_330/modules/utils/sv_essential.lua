@@ -29,11 +29,10 @@ end
 function scp_330.RemoveEffect(ply)
     if (not IsValid(ply)) then return end
 
-    ply.SCP330_HandCut = nil 
+    ply.SCP330_HandCut = nil
     ply.SCP330_CandyTaken = nil
-    timer.Remove("SCP055_DeepBleeding".. ply:EntIndex())
+    timer.Remove("SCP055_DeepBleeding" .. ply:EntIndex())
     scp_330.RemoveClientEffect(ply)
-    
 end
 
 function scp_330.DeepBleeding(ply)
@@ -45,7 +44,7 @@ function scp_330.DeepBleeding(ply)
     scp_330.BlurrEffect(ply, 7)
     scp_330.DisplayOverlayBlood(ply)
 
-    timer.Create("SCP055_DeepBleeding".. ply:EntIndex(), recurrence, duration/recurrence, function()
+    timer.Create("SCP055_DeepBleeding" .. ply:EntIndex(), recurrence, duration / recurrence, function()
         if (not IsValid(ply)) then return end
 
         ply:TakeDamage(damageBleed)
@@ -61,7 +60,7 @@ function scp_330.DisplayOverlayBlood(ply)
 end
 
 function scp_330.SetTableEntitie(ply, ent, name, value)
-    timer.Simple(engine.TickInterval(), function()
+    timer.Simple(1, function() --? Delay to avoid errors cauz fking client is not set yet when the ent is created
         if (not IsValid(ply)) then return end
 
         table.insert( ent[name], value )
@@ -85,6 +84,15 @@ function scp_330.BlurrEffect(ply, maxTime)
     net.Send(ply)
 end
 
+function scp_330.GetCandy()
+    local langUsed = SCP_330_CONFIG.LangServer
+    if not SCP_330_LANG[langUsed] then
+        langUsed = "en" -- Default lang is EN.
+    end
+    local candies = SCP_330_CONFIG.FlavorCandy[langUsed]
+    return table.Random(candies)
+end
+
 --NET MESSAGES
 net.Receive(SCP_330_CONFIG.SetConvarInt, function ( len, ply )
     if (ply:IsSuperAdmin() or game.SinglePlayer()) then
@@ -92,6 +100,6 @@ net.Receive(SCP_330_CONFIG.SetConvarInt, function ( len, ply )
         local value = net.ReadUInt(14)
         SCP_330_CONFIG[name]:SetInt(value)
 
-        scp_330.SetConvarClientSide('Client'..name, value) --? The value clientside start with Client
+        scp_330.SetConvarClientSide("Client" .. name, value) --? The value clientside start with Client
     end
 end)

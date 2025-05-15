@@ -9,9 +9,9 @@ end
 
 -- Intialise the physic of the entity
 function ENT:RebuildPhysics( )
-	self:PhysicsInit( SOLID_VPHYSICS ) 
+	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid( SOLID_VPHYSICS ) 
+	self:SetSolid( SOLID_VPHYSICS )
 	self:SetUseType(SIMPLE_USE)
 	self:PhysWake()
 end
@@ -20,9 +20,9 @@ end
 function ENT:PhysicsCollide( data, physobj )
 	if data.DeltaTime > 0.2 then
 		if data.Speed > 250 then
-			self:EmitSound( "physics/glass/glass_bottle_impact_hard"..math.random(1, 3)..".wav", 75, math.random( 100, 110 ) )	
+			self:EmitSound( "physics/glass/glass_bottle_impact_hard" .. math.random(1, 3) .. ".wav", 75, math.random( 100, 110 ) )
 		else
-			self:EmitSound( "physics/glass/glass_impact_soft"..math.random(1, 3)..".wav", 75, math.random( 100, 110 ) )			
+			self:EmitSound( "physics/glass/glass_impact_soft" .. math.random(1, 3) .. ".wav", 75, math.random( 100, 110 ) )
 		end
 	end
 end
@@ -61,9 +61,9 @@ function ENT:Use(ply)
 		end)
 	else
 		local candySwep = ply:HasWeapon("candy_scp330") and ply:GetWeapon("candy_scp330") or ply:Give("candy_scp330")
-		local value, candyTaken = table.Random( SCP_330_CONFIG.FlavorCandy )
+		local value, candyTaken = scp_330.GetCandy()
 		scp_330.SetTableEntitie(ply, candySwep, "CandyPossessed", candyTaken)
-		scp_330.SendNotification(ply, "Vous avez pris un bonbon de SCP-330 au parfum de " .. candyTaken .. " !")
-		ply:EmitSound( "scp_330/pick_candy.mp3", 75, math.random( 90, 110 ) )	
+		scp_330.SendNotification(ply, scp_330.GetTranslation("pick_candy") .. candyTaken .. " !")
+		ply:EmitSound( "scp_330/pick_candy.mp3", 75, math.random( 90, 110 ) )
 	end
 end

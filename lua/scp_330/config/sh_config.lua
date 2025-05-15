@@ -8,7 +8,9 @@ SCP_330_CONFIG.PlayClientSound = "SCP_330_CONFIG.PlayClientSound"
 SCP_330_CONFIG.BlurrEffect = "SCP_330_CONFIG.BlurrEffect"
 SCP_330_CONFIG.SetConvarInt = "SCP_330_CONFIG.SetConvarInt"
 
-SCP_330_CONFIG.FlavorCandy = {
+SCP_330_CONFIG.FlavorCandy = {}
+
+SCP_330_CONFIG.FlavorCandy["fr"] = {
     Fraise = true,
     Pomme = true,
     Cerise = true,
@@ -29,4 +31,27 @@ SCP_330_CONFIG.FlavorCandy = {
     Figue = true,
     Raisin = true,
     Noisette = true,
+}
+
+SCP_330_CONFIG.FlavorCandy["en"] = {
+    Strawberry = true,
+    Apple = true,
+    Cherry = true,
+    Orange = true,
+    Lemon = true,
+    Banana = true,
+    Raspberry = true,
+    Blueberry = true,
+    Pineapple = true,
+    Melon = true,
+    Watermelon = true,
+    Peach = true,
+    Pear = true,
+    Apricot = true,
+    Plum = true,
+    Mango = true,
+    Kiwi = true,
+    Fig = true,
+    Grape = true,
+    Hazelnut = true,
 }

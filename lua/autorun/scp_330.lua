@@ -2,8 +2,12 @@
 scp_330 = {}
 -- Global Variable
 SCP_330_CONFIG = {}
+-- Lang
+SCP_330_LANG = {}
 -- Root path
 SCP_330_CONFIG.RootFolder = "scp_330/"
+-- Actual lang server
+SCP_330_CONFIG.LangServer = GetConVar("gmod_language"):GetString()
 
 /*
 * Load the file set in the parameters.
@@ -50,6 +54,7 @@ local function LoadDirectory( directory )
 end
 
 print("SCP-330 Loading . . .")
-    LoadDirectory(SCP_330_CONFIG.RootFolder .. "config")
-    LoadDirectory(SCP_330_CONFIG.RootFolder .. "modules")
+LoadDirectory(SCP_330_CONFIG.RootFolder .. "config")
+LoadDirectory(SCP_330_CONFIG.RootFolder .. "language")
+LoadDirectory(SCP_330_CONFIG.RootFolder .. "modules")
 print("SCP-330 Loaded!")
