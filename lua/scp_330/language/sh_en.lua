@@ -1,5 +1,5 @@
 -- SCP-330, A representation of a paranormal object on a fictional series on the game Garry's Mod.
--- Copyright (C) 2025  MrMarrant aka BIBI.
+-- Copyright (C) 2025 MrMarrant.
 
 -- This program is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
