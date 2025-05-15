@@ -1,17 +1,25 @@
+-- SCP-330, A representation of a paranormal object on a fictional series on the game Garry's Mod.
+-- Copyright (C) 2025 MrMarrant.
+
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 include("shared.lua")
 
 function ENT:Draw()
     self:DrawModel()
 end
 
-function ENT:Initialize()
-end
-
 function ENT:Think()
-    -- TODO : Afficher la première fois que le joueur s'approche de l'entité, 
-    -- TODO : affichez le texte d'avertissement qui s'efface rapidement avec un sfx et set le param SCP330_FirstContact
-    -- scp_330.ProximityEffect(self)
-end
-
-function ENT:OnRemove()
+    scp_330.ProximityEffect(self)
 end

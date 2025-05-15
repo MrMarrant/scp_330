@@ -1,9 +1,29 @@
+-- SCP-330, A representation of a paranormal object on a fictional series on the game Garry's Mod.
+-- Copyright (C) 2025 MrMarrant.
+
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+
+-- This program is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 -- Functions
 scp_330 = {}
 -- Global Variable
-scp_330_CONFIG = {}
+SCP_330_CONFIG = {}
+-- Lang
+SCP_330_LANG = {}
 -- Root path
-scp_330_CONFIG.RootFolder = "scp_330/"
+SCP_330_CONFIG.RootFolder = "scp_330/"
+-- Actual lang server
+SCP_330_CONFIG.LangServer = GetConVar("gmod_language"):GetString()
 
 /*
 * Load the file set in the parameters.
@@ -50,6 +70,7 @@ local function LoadDirectory( directory )
 end
 
 print("SCP-330 Loading . . .")
-    LoadDirectory(scp_330_CONFIG.RootFolder .. "config")
-    LoadDirectory(scp_330_CONFIG.RootFolder .. "modules")
+LoadDirectory(SCP_330_CONFIG.RootFolder .. "config")
+LoadDirectory(SCP_330_CONFIG.RootFolder .. "language")
+LoadDirectory(SCP_330_CONFIG.RootFolder .. "modules")
 print("SCP-330 Loaded!")

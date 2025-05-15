@@ -1,5 +1,5 @@
--- SCP-055, A representation of a paranormal object on a fictional series on the game Garry's Mod.
--- Copyright (C) 2023  MrMarrant aka BIBI.
+-- SCP-330, A representation of a paranormal object on a fictional series on the game Garry's Mod.
+-- Copyright (C) 2025 MrMarrant.
 
 -- This program is free software: you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-include('shared.lua')
+include("shared.lua")
 
 SWEP.PrintName = "Sucrerie"
 SWEP.Author = "MrMarrant"
