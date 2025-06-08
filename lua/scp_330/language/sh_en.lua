@@ -16,7 +16,6 @@
 
 local LANG_EN = {
     warningsettings = "Only Super Admins can change these values, all other roles will do nothing.",
-    adminaccess = "You need to be Admin or Super Admin to access this menu.",
     radius_effect = "Radius effect of the text message display at player to warning them.",
     bleed_delay = "Defined every x seconds, bleeding damage is applied.",
     bleed_duration = "Define how long the bleeding will last in seconds.",
