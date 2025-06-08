@@ -77,7 +77,7 @@ end
 
 function scp_330.SetTableEntitie(ply, ent, name, value)
     timer.Simple(1, function() --? Delay to avoid errors cauz fking client is not set yet when the ent is created
-        if (not IsValid(ply)) then return end
+        if (not IsValid(ply) or not IsValid(ent)) then return end
 
         table.insert( ent[name], value )
         net.Start(SCP_330_CONFIG.SetTableEntitie)

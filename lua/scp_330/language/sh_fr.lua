@@ -15,15 +15,14 @@
 -- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 local LANG_FR = {
-    warningsettings = "Only Super Admins can change these values, all other roles will do nothing.",
-    adminaccess = "You need to be Admin or Super Admin to access this menu.",
+    warningsettings = "Seuls les superadministrateurs peuvent modifier ces valeurs, tous les autres rôles ne feront rien",
     radius_effect = "Radius effect of the text message display at player to warning them.",
     bleed_delay = "Defined every x seconds, bleeding damage is applied.",
     bleed_duration = "Define how long the bleeding will last in seconds.",
     bleed_damage = "Define the damage to apply when player bleed.",
 
     pick_candy = "Vous avez pris un bonbon de SCP-330 au parfum de ",
-        eat_candy = "Vous mangez le bonbon goût ",
+    eat_candy = "Vous mangez le bonbon goût ",
     proximity_effect_01 = "N’en prenez que deux,",
     proximity_effect_02 = "s’il vous plaît!!",
 }
